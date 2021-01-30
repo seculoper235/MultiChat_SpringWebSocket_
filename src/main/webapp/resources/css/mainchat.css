@@ -1,0 +1,50 @@
+* {
+    box-sizing: border-box;
+}
+
+html,body {
+    height: 100%;
+    margin: 0;
+}
+
+header {
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+}
+
+#container {
+    display: flex;
+    flex-direction: column;
+}
+
+#chatbox {
+    height: 100%;
+
+}
+#messagebox {
+    resize: none;
+    height: 320px;
+    width: 100%;
+}
+
+#chatmenu {
+    display: flex;
+}
+#setting {
+    flex-grow: 1;
+}
+#inputmessage {
+    flex-grow: 8;
+    flex-shrink: 1;
+}
+#send {
+    flex-grow: 1;
+}
+
+footer {
+    text-align: center;
+}
