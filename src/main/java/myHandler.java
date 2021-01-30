@@ -6,6 +6,7 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class myHandler extends TextWebSocketHandler {
     private List<WebSocketSession> webSocketSessionList = new ArrayList<>();
@@ -15,9 +16,10 @@ public class myHandler extends TextWebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         webSocketSessionList.add(session);
 
-        System.out.println(session.getPrincipal().getName() + " 님이 입장하셨습니다.");
+        // 세션이 존재하지 않음! 오류!!! --> 스프링 시큐리티를 사용할 것!
+        System.out.println(session.getId() + " 님이 입장하셨습니다.");
         for (WebSocketSession wsSession : webSocketSessionList) {
-            wsSession.sendMessage(new TextMessage(session.getPrincipal().getName() + " 님이 입장하셨습니다.\n"));
+            wsSession.sendMessage(new TextMessage(session.getId() + " 님이 입장하셨습니다.\n"));
         }
     }
 
@@ -25,7 +27,7 @@ public class myHandler extends TextWebSocketHandler {
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         for (WebSocketSession wsSession : webSocketSessionList) {
-            wsSession.sendMessage(new TextMessage(session.getPrincipal().getName()+ "> " +message.getPayload()));
+            wsSession.sendMessage(new TextMessage(session.getId() + "> " +message.getPayload() + "\n"));
         }
     }
 
@@ -38,10 +40,9 @@ public class myHandler extends TextWebSocketHandler {
     // 연결이 끊긴 후(채팅방을 나갔으므로, 세션 리스트에서 삭제)
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        System.out.println("서버 에러");
+        /*for (WebSocketSession wsSession : webSocketSessionList) {
+            wsSession.sendMessage(new TextMessage(session.getId() + " 님이 퇴장하셨습니다.\n"));
+        }*/
         webSocketSessionList.remove(session);
-        for (WebSocketSession wsSession : webSocketSessionList) {
-            wsSession.sendMessage(new TextMessage(session.getPrincipal().getName() + " 님이 퇴장하셨습니다.\n"));
-        }
     }
 }
