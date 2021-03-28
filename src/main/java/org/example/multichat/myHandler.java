@@ -1,15 +1,19 @@
+package org.example.multichat;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
+@Component
+@RequiredArgsConstructor
 public class myHandler extends TextWebSocketHandler {
-    private List<WebSocketSession> webSocketSessionList = new ArrayList<>();
+    private static List<WebSocketSession> webSocketSessionList = new ArrayList<>();
 
     // 커넥션 맺은 후(세션 리스트에 추가)
     @Override
@@ -43,6 +47,7 @@ public class myHandler extends TextWebSocketHandler {
         /*for (WebSocketSession wsSession : webSocketSessionList) {
             wsSession.sendMessage(new TextMessage(session.getId() + " 님이 퇴장하셨습니다.\n"));
         }*/
+        super.afterConnectionClosed(session, status);
         webSocketSessionList.remove(session);
     }
 }

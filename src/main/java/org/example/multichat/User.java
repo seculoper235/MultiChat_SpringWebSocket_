@@ -1,3 +1,5 @@
+package org.example.multichat;
+
 import lombok.Data;
 
 @Data
