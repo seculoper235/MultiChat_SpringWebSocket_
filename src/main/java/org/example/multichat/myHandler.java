@@ -1,6 +1,7 @@
 package org.example.multichat;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -10,10 +11,11 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class myHandler extends TextWebSocketHandler {
-    private static List<WebSocketSession> webSocketSessionList = new ArrayList<>();
+    private final List<WebSocketSession> webSocketSessionList = new ArrayList<>();
 
     // 커넥션 맺은 후(세션 리스트에 추가)
     @Override
@@ -21,9 +23,10 @@ public class myHandler extends TextWebSocketHandler {
         webSocketSessionList.add(session);
 
         // 세션이 존재하지 않음! 오류!!! --> 스프링 시큐리티를 사용할 것!
-        System.out.println(session.getId() + " 님이 입장하셨습니다.");
+        String msg = session.getId() + " 님이 입장하셨습니다.";
+        log.info(msg);
         for (WebSocketSession wsSession : webSocketSessionList) {
-            wsSession.sendMessage(new TextMessage(session.getId() + " 님이 입장하셨습니다.\n"));
+            wsSession.sendMessage(new TextMessage(msg+ "\n"));
         }
     }
 
