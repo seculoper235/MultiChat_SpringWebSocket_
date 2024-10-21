@@ -47,9 +47,9 @@ public class myHandler extends TextWebSocketHandler {
     // 연결이 끊긴 후(채팅방을 나갔으므로, 세션 리스트에서 삭제)
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-        /*for (WebSocketSession wsSession : webSocketSessionList) {
+        for (WebSocketSession wsSession : webSocketSessionList) {
             wsSession.sendMessage(new TextMessage(session.getId() + " 님이 퇴장하셨습니다.\n"));
-        }*/
+        }
         super.afterConnectionClosed(session, status);
         webSocketSessionList.remove(session);
     }
