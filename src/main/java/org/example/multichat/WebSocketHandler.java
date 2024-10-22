@@ -14,7 +14,7 @@ import java.util.List;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class myHandler extends TextWebSocketHandler {
+public class WebSocketHandler extends TextWebSocketHandler {
     private final List<WebSocketSession> webSocketSessionList = new ArrayList<>();
 
     // 커넥션 맺은 후(세션 리스트에 추가)

@@ -7,10 +7,6 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-
-/*
- * WebAppconfig.xml에 작성한 내용을 여기다 적어준다(viewResolver 제외)
- */
 @Configuration
 @EnableWebSocket
 @RequiredArgsConstructor
